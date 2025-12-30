@@ -1,4 +1,4 @@
-const { log } = require('console')
+
 const prisma = require('../lib/prisma')
 
 exports.registerUser = async (req, res) => {
@@ -31,7 +31,7 @@ exports.registerUser = async (req, res) => {
     if (!newUser) {
       return res
         .status(400)
-        .json({ success: false, message: 'Unable to crete user' })
+        .json({ success: false, message: 'Unable to create user' })
     }
 
     return res.status(201).json({

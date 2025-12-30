@@ -73,8 +73,26 @@ npm install --save-dev @types/node
 7️⃣ Install PostgreSQL driver + Prisma adapter (REQUIRED)
 npm install pg @prisma/adapter-pg
 
-8️⃣ Install PostgreSQL driver + Prisma adapter (REQUIRED)
-npm install pg @prisma/adapter-pg
+8️⃣ create a prisma.js file in src/lib or in src
+ content:
+ 
+ import 'dotenv/config'
+
+ import { PrismaClient } from '@prisma/client'
+ import { Pool } from 'pg'
+ import { PrismaPg } from '@prisma/adapter-pg'
+
+ const pool = new Pool({
+   connectionString: process.env.DATABASE_URL,
+ })
+
+ const adapter = new PrismaPg(pool)
+
+ const prisma = new PrismaClient({
+   adapter,
+ })
+
+ export default prisma
 
 
 Why:
