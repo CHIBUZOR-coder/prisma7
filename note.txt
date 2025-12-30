@@ -1,0 +1,97 @@
+1️⃣ Create a Node.js project (if not already)
+npm init -y
+
+**Install Express (optional but common):
+npm install express
+
+2️⃣ Install Prisma 7 (CLI + Client)
+npm install prisma --save-dev
+npm install @prisma/client
+
+**Check version (should be 7.x):
+npx prisma -v
+
+3️⃣ Initialize Prisma
+npx prisma init
+
+*This creates:
+prisma/schema.prisma
+.env
+
+
+4️⃣ Configure PostgreSQL database
+.env
+DATABASE_URL="postgresql://username:password@localhost:5432/dbname"
+⚠️ Prisma 7 still needs this for CLI commands (migrate, generate).
+
+
+
+5️⃣ Update schema.prisma (Prisma 7 style)
+
+⚠️ NO url inside datasource in Prisma 7.
+
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+}
+
+
+
+
+6️⃣ Create prisma.config.ts (CLI only)
+
+Prisma 7 requires this for migrations & generate.
+
+**content below:
+import 'dotenv/config'
+import type { PrismaConfig } from 'prisma'
+
+const config: PrismaConfig = {
+  datasource: {
+    url: process.env.DATABASE_URL as string,
+  },
+}
+
+export default config
+**Install Node.js type definitions (IMPORTANT)
+
+Required so TypeScript can understand process.env inside prisma.config.ts.
+
+npm install --save-dev @types/node
+
+
+7️⃣ Install PostgreSQL driver + Prisma adapter (REQUIRED)
+npm install pg @prisma/adapter-pg
+
+8️⃣ Install PostgreSQL driver + Prisma adapter (REQUIRED)
+npm install pg @prisma/adapter-pg
+
+
+Why:
+Prisma 7 has no built-in DB engine
+Adapter connects Prisma to PostgreSQL
+
+9️⃣ Generate Prisma Client
+npx prisma generate
+Run after every schema change.
+
+🔟 Run migrations
+npx prisma migrate dev --name init
+
+
+1️⃣1️⃣ Install Express type definitions (for router suggestions)
+Even in JavaScript, this enables:
+router.get
+router.post
+IntelliSense in VS Code
+npm install --save-dev @types/express
