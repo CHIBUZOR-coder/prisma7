@@ -72,6 +72,9 @@ npm install --save-dev @types/node
 
 7️⃣ Install PostgreSQL driver + Prisma adapter (REQUIRED)
 npm install pg @prisma/adapter-pg
+*Why:
+Prisma 7 has no built-in DB engine
+Adapter connects Prisma to PostgreSQL
 
 8️⃣ create a prisma.js file in src/lib or in src
  content:
@@ -95,9 +98,6 @@ npm install pg @prisma/adapter-pg
  export default prisma
 
 
-Why:
-Prisma 7 has no built-in DB engine
-Adapter connects Prisma to PostgreSQL
 
 9️⃣ Generate Prisma Client
 npx prisma generate
